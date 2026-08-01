@@ -15,33 +15,9 @@ Example 3
 
 Input: nums = [3, 2, 3, 4, 5]Output:[2, 3, 3, 4, 5]
 
-Output:
-
 Constraints
 
 1 <= nums.length <= 106-104 <= nums[i] <= 104nums[i] may contain duplicate values.
-
-Frequently Occurring Doubts
-
-Why does merge sort require extra space, and how much?
-
-Can merge sort handle duplicate elements?
-
-Interview Follow-ups
-
-Can merge sort be implemented in-place? If not, why?
-
-Why is merge sort preferred for linked lists?
-
-Fun Facts
-
-Fact 1
-
-Fact 2
-
-Fact 3
-
-Fact 4
 
 ## Solution
 
@@ -100,5 +76,5 @@ https://takeuforward.org/plus/dsa/problems/merge-sorting?subject=dsa-concept-rev
 
 ## Stats
 - Test Cases: 121/121
-- Time: 0.051s
-- Memory: 404.39 KiB
+- Time: 0.053s
+- Memory: 404.22 KiB
