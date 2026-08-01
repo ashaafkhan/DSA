@@ -3,12 +3,32 @@
 ## Problem Description
 Given an array of integers, nums,sort the array in non-decreasing order using the merge sort algorithm. Return the sorted array.A sorted array in non-decreasing order is one in which each element is either greater than or equal to all the elements to its left in the array.
 
+Example 1
+
+Example 2
+
+Example 3
+
+Output:
+
+Constraints
+
+Hints
+
+Frequently Occurring Doubts
+
+Interview Follow-ups
+
+Fun Facts
+
+Extras
+
 ## Solution
 
 ```cpp
 class Solution {
 public:
-
+    //tc= O(nlogn) & sc= O(n)
     void merge(vector<int>&arr,int low, int mid, int high){
         vector<int>temp;
         int left=low;
@@ -60,5 +80,5 @@ https://takeuforward.org/plus/dsa/problems/merge-sorting?subject=dsa-concept-rev
 
 ## Stats
 - Test Cases: 121/121
-- Time: 0.039s
-- Memory: 404.32 KiB
+- Time: 0.037s
+- Memory: 404.52 KiB
