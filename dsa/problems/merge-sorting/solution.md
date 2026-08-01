@@ -5,23 +5,43 @@ Given an array of integers, nums,sort the array in non-decreasing order using th
 
 Example 1
 
+Input: nums = [7, 4, 1, 5, 3]Output: [1, 3, 4, 5, 7]Explanation: 1 <= 3 <= 4 <= 5 <= 7.Thus the array is sorted in non-decreasing order.
+
 Example 2
 
+Input: nums = [5, 4, 4, 1, 1]Output: [1, 1, 4, 4, 5]Explanation: 1 <= 1 <= 4 <= 4 <= 5.Thus the array is sorted in non-decreasing order.
+
 Example 3
+
+Input: nums = [3, 2, 3, 4, 5]Output:[2, 3, 3, 4, 5]
 
 Output:
 
 Constraints
 
-Hints
+1 <= nums.length <= 106-104 <= nums[i] <= 104nums[i] may contain duplicate values.
 
 Frequently Occurring Doubts
 
+Why does merge sort require extra space, and how much?
+
+Can merge sort handle duplicate elements?
+
 Interview Follow-ups
+
+Can merge sort be implemented in-place? If not, why?
+
+Why is merge sort preferred for linked lists?
 
 Fun Facts
 
-Extras
+Fact 1
+
+Fact 2
+
+Fact 3
+
+Fact 4
 
 ## Solution
 
@@ -80,5 +100,5 @@ https://takeuforward.org/plus/dsa/problems/merge-sorting?subject=dsa-concept-rev
 
 ## Stats
 - Test Cases: 121/121
-- Time: 0.037s
-- Memory: 404.52 KiB
+- Time: 0.051s
+- Memory: 404.39 KiB
