@@ -48,23 +48,42 @@ class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
 
-        //Optimal Solution(Kadane's Algo) => O(n)
+        //FollowUp: Print the maxSubArray
 
         int n = nums.size();
         long long sum =0, maxi = LLONG_MIN;
 
-        for(int i =0;i<n;i++){
+        int start =0;
+
+        int ansStart=-1, ansEnd=-1;
+
+        for(int i=0;i<n;i++){
+
+            if(sum==0){
+                start=i;
+            }
 
             sum += nums[i];
 
             if(sum>maxi){
-                maxi=sum;
+                maxi = sum;
+                ansStart=start;
+                ansEnd=i;
             }
 
             if(sum<0){
                 sum =0;
             }
         }
+
+        //priniting the maxSubArray
+        cout<< "The maxSubArray is: [";
+        for(int i=ansStart;i<=ansEnd;i++){
+            cout << nums[i] << " ";
+        }
+        cout << "]" <<endl;
+
+        //returning max sum
         return maxi;
         
     }
@@ -72,9 +91,9 @@ public:
 ```
 
 ## Problem Link
-https://takeuforward.org/plus/dsa/problems/kadane's-algorithm?subject=dsa-concept-revision&approach=optimal&tab=submissions
+https://takeuforward.org/plus/dsa/problems/kadane's-algorithm?subject=dsa-concept-revision&approach=follow-up&tab=submissions
 
 ## Stats
 - Test Cases: 121/121
-- Time: 0.028s
-- Memory: 397.07 KiB
+- Time: 0.029s
+- Memory: 397.68 KiB
