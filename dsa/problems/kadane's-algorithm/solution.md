@@ -47,23 +47,20 @@ Constraints
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
+        //better solution => O(n^2)
 
-        //brute force=> O(n^3)
-
+        int n = nums.size();
         int maxi = INT_MIN;
-
-        int n =  nums.size();
-
+        
         for(int i=0;i<n;i++){
+            int sum = 0;
             for(int j=i;j<n;j++){
-                int sum =0;
-                for(int k =i;k<=j;k++){
-                    sum += nums[k];
-                }
+                sum += nums[j];
                 maxi = max(maxi,sum);
             }
         }
         return maxi;
+        
     }
 };
 ```
