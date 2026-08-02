@@ -48,23 +48,22 @@ class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
 
-        int n = nums.size();
-        long long sum =0, maxi = LLONG_MIN;
+        //brute force=> O(n^3)
 
-        for(int i =0;i<n;i++){
+        int maxi = INT_MIN;
 
-            sum += nums[i];
+        int n =  nums.size();
 
-            if(sum>maxi){
-                maxi=sum;
-            }
-
-            if(sum<0){
-                sum =0;
+        for(int i=0;i<n;i++){
+            for(int j=i;j<n;j++){
+                int sum =0;
+                for(int k =i;k<=j;k++){
+                    sum += nums[k];
+                }
+                maxi = max(maxi,sum);
             }
         }
         return maxi;
-        
     }
 };
 ```
