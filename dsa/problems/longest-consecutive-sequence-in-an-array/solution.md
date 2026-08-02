@@ -44,45 +44,38 @@ Constraints
 ## Solution
 
 ```cpp
-//Brute Force
 class Solution {
-
-private:
-    bool linearSearch(vector<int>& a, int num){
-        int n = a.size();
-        for(int i=0;i<n;i++){
-            if(a[i]== num){
-               return true;
-            }
-        } 
-        return false;
-
-    }
-
 public:
     int longestConsecutive(vector<int>& nums) {
+        //Better Solution
         int n = nums.size();
-        if(n==0) return 0;
-        int longest = 1;
+
+        sort(nums.begin(),nums.end());
+
+        int lastSmaller = INT_MIN;
+        int cnt= 0;
+        int longest=1;
+
         for(int i=0;i<n;i++){
-            int x = nums[i];
-            int cnt =1;
-            while(linearSearch(nums,x+1) == true){
-                x +=1;
+            if(nums[i]-1 == lastSmaller){
                 cnt += 1;
+                lastSmaller = nums[i];
+            }
+            else if(nums[i] != lastSmaller){
+                cnt = 1;
+                lastSmaller = nums[i];
             }
             longest = max(longest,cnt);
         }
         return longest;
-        
     }
 };
 ```
 
 ## Problem Link
-https://takeuforward.org/plus/dsa/problems/longest-consecutive-sequence-in-an-array?subject=dsa-concept-revision&approach=better&tab=submissions
+https://takeuforward.org/plus/dsa/problems/longest-consecutive-sequence-in-an-array?subject=dsa-concept-revision&approach=optimal&tab=submissions
 
 ## Stats
 - Test Cases: 122/122
-- Time: 0.071s
-- Memory: 404.32 KiB
+- Time: 0.072s
+- Memory: 404.68 KiB
