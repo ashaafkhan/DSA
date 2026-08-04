@@ -50,19 +50,35 @@ class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
 
-        //better soln => hashing
-        unordered_map<int, int>mpp;
+        //optimal solution => 2 pointer
 
         int n = nums.size();
 
+        vector<int>ans;
+
+        vector<vector<int>>eleIndex;
+
         for(int i=0;i<n;i++){
-            int num = nums[i];
-            int moreNeeded = target - num;
-            if(mpp.find(moreNeeded) != mpp.end()){
-                return {mpp[moreNeeded],i};
-            }
-            mpp[num] = i;
+            eleIndex.push_back({nums[i],i});
         }
+
+        sort(eleIndex.begin(),eleIndex.end());
+
+        int left=0, right= n-1;
+
+        while(left<right){
+            int sum = eleIndex[left][0] + eleIndex[right][0];
+            if(sum == target){
+                ans.push_back(eleIndex[left][1]);
+                ans.push_back(eleIndex[right][1]);
+                return ans;
+            }else if(sum< target){
+                left++;
+            }else{
+                right--;
+            }
+        }
+
         return {-1,-1};
         
     }
@@ -70,9 +86,9 @@ public:
 ```
 
 ## Problem Link
-https://takeuforward.org/plus/dsa/problems/two-sum?subject=dsa-concept-revision&approach=better&tab=submissions
+https://takeuforward.org/plus/dsa/problems/two-sum?subject=dsa-concept-revision&approach=optimal&tab=submissions
 
 ## Stats
 - Test Cases: 112/112
-- Time: 0.072s
-- Memory: 426.12 KiB
+- Time: 0.475s
+- Memory: 429.03 KiB
