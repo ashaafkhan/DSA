@@ -67,19 +67,22 @@ Constraints
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        //brute force => O(n^3)
+        //better soln => O(n^2 * log(k)),
         int n = nums.size();
-        set<vector<int>> tripletSet;
-        
+
+        set<vector<int>>tripletSet;
+
         for(int i=0;i<n;i++){
-            for(int j=i+1;j<n;j++){
-                for(int k=j+1;k<n;k++){
-                    if(nums[i]+nums[j]+nums[k] == 0){
-                        vector<int>temp = {nums[i],nums[j],nums[k]};
-                        sort(temp.begin(),temp.end());
-                        tripletSet.insert(temp);
-                    }
+            set<int>hashset;
+            for(int j = i+1;j<n;j++){
+                int third = -(nums[i]+nums[j]);
+                if(hashset.find(third) != hashset.end()){
+                    vector<int>temp = {nums[i],nums[j],third};
+
+                    sort(temp.begin(),temp.end());
+                    tripletSet.insert(temp);
                 }
+                hashset.insert(nums[j]);
             }
         }
         vector<vector<int>>ans(tripletSet.begin(),tripletSet.end());
@@ -93,5 +96,5 @@ https://takeuforward.org/plus/dsa/problems/3-sum?subject=dsa-concept-revision&ap
 
 ## Stats
 - Test Cases: 124/124
-- Time: 3.634s
-- Memory: 457.70 KiB
+- Time: 2.923s
+- Memory: 457.79 KiB
