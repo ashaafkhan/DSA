@@ -41,30 +41,29 @@ n == matrix[i].length.
 class Solution {
 public:
     void rotateMatrix(vector<vector<int>>& matrix) {
-        //brute force
+        //optimal=>Inplace
+
         int n = matrix.size();
 
-        vector<vector<int>> rotated(n,vector<int>(n,0));
+        //transpose
+        for(int i =0;i<=n-2;i++){
+            for(int j=i+1;j<=n-1;j++){
+                swap(matrix[i][j],matrix[j][i]);
+            }
+        }
 
+        //reverse
         for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                rotated[j][n-i-1] = matrix[i][j];
-            }
+            reverse(matrix[i].begin(),matrix[i].end());
         }
-        for(int i=0;i<rotated.size();i++){
-            for(int j=0;j<matrix[0].size();j++){
-                matrix[i][j] = rotated[i][j];
-            }
-        }
-        
     }
 };
 ```
 
 ## Problem Link
-https://takeuforward.org/plus/dsa/problems/rotate-matrix-by-90-degrees?subject=dsa-concept-revision&approach=brute&tab=submissions
+https://takeuforward.org/plus/dsa/problems/rotate-matrix-by-90-degrees?subject=dsa-concept-revision&approach=optimal&tab=submissions
 
 ## Stats
 - Test Cases: 112/112
-- Time: 0.013s
-- Memory: 407.66 KiB
+- Time: 0.016s
+- Memory: 408.89 KiB
