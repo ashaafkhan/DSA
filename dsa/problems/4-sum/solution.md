@@ -60,37 +60,48 @@ Constraints
 class Solution {
 public:
     vector<vector<int>> fourSum(vector<int>& nums, int target) {
-        // better soln:  O(N3xlog(M))
+        //optimal soln (two pointer) => O(n^3)
+
         int n = nums.size();
-        set<vector<int>>st;
+        sort(nums.begin(),nums.end());
+        vector<vector<int>>ans;
 
         for(int i=0;i<n;i++){
-            for(int j=i+1;j<n;j++){
-                set<long long>hashset;
-                for(int k=j+1;k<n;k++){
-                    long long sum = nums[i] + nums[j];
+            if(i>0 && nums[i] == nums[i-1]) continue;
+            for(int j = i+1;j<n;j++){
+                if(j != i+1 && nums[j]== nums[j-1]) continue;
+                int k = j+1;
+                int l = n-1;
+                while(k<l){
+                    long long sum = nums[i];
+                    sum += nums[j];
                     sum += nums[k];
-                    long long fourth = target - sum;
-                    if(hashset.find(fourth) != hashset.end()){
-                        vector<int> temp = {nums[i],nums[j],nums[k],static_cast<int>(fourth)};
-                        sort(temp.begin(),temp.end());
-                        st.insert(temp);
-                    }
-                    hashset.insert(nums[k]);
+                    sum += nums[l];
+                    if(sum == target){
+                        vector<int> temp = {nums[i],nums[j],nums[k],nums[l]};
+                        ans.push_back(temp);
+                        k++;
+                        l--;
+                        while(k<l && nums[k]==nums[k-1]) k++;
+                        while(k<l && nums[l]==nums[l+1]) l--;
+                    }else if(sum< target){
+                        k++;
+                    }else{
+                        l--;
+                    }      
+                    
                 }
             }
         }
-        vector<vector<int>>ans(st.begin(),st.end());
         return ans;
-        
     }
 };
 ```
 
 ## Problem Link
-https://takeuforward.org/plus/dsa/problems/4-sum?subject=dsa-concept-revision&approach=better&tab=submissions
+https://takeuforward.org/plus/dsa/problems/4-sum?subject=dsa-concept-revision&approach=optimal&tab=submissions
 
 ## Stats
 - Test Cases: 67/67
-- Time: 5.011s
-- Memory: 459.33 KiB
+- Time: 0.457s
+- Memory: 429.15 KiB
