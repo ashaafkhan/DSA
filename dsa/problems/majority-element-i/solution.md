@@ -49,28 +49,44 @@ One value appears more than n/2 times.
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
-        //better solution => Hashing(O(nlogn)+O(n))
+
+        //optimal soln => Moore's Voting Algorithm
+
         int n = nums.size();
-        unordered_map<int,int>mp;
+        int cnt=0;
+        int el;
 
-        for(int num: nums){
-            mp[num]++;
-        }
-
-        for(const auto& pair : mp){
-            if(pair.second > n/2){
-                return pair.first;
+        //Moore's Voting Algorithm
+        for(int i=0;i<n;i++){
+            if(cnt==0){
+                cnt =1;
+                el = nums[i];
+            }else if(el == nums[i]){
+                cnt++;
+            }else{
+                cnt--;
             }
         }
+
+        int cnt1=0;
+        for(int i=0;i<n;i++){
+            if(nums[i]==el){
+                cnt1++;
+            }
+        }
+        if(cnt1>n/2){
+            return el;
+        }
         return -1;
+        
     }
 };
 ```
 
 ## Problem Link
-https://takeuforward.org/plus/dsa/problems/majority-element-i?subject=dsa-concept-revision&approach=better&tab=submissions
+https://takeuforward.org/plus/dsa/problems/majority-element-i?subject=dsa-concept-revision&approach=optimal&tab=submissions
 
 ## Stats
 - Test Cases: 118/118
-- Time: 0.056s
-- Memory: 415.56 KiB
+- Time: 0.028s
+- Memory: 397.12 KiB
