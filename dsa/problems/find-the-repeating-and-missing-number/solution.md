@@ -54,33 +54,30 @@ n - 2 elements in nums appear exactly once and are valued between [1, n].
 class Solution {
 public:
     vector<int> findMissingRepeatingNumbers(vector<int> nums) {
-        //brute force => O(n^2)
-        int n =  nums.size();
-        int repeating = -1, missing=-1;
+        //better soln => hashing(O(2n))
+        int n = nums.size();
+        int hash[n+1] = {0};
 
-        for(int i =1;i<=n;i++){
-            int cnt =0;
-            for(int j=0;j<n;j++){
-                if(nums[j]==i){
-                    cnt++;
-                }
-            }
-            if(cnt==2) repeating = i;
-            else if(cnt==0) missing = i;
-
-            if(repeating != -1 && missing !=-1){
-                break;
-            }
+        for(int i=0;i<n;i++){
+            hash[nums[i]]++;
         }
-        return {repeating,missing};
+
+        int repeating = -1 , missing = -1;
+
+        for(int i=1;i<=n;i++){
+            if(hash[i]==2) repeating=i;
+            else if(hash[i]==0) missing=i;
+            if(repeating != -1 && missing != -1) break;
+        }
+        return {repeating, missing};
     }
 };
 ```
 
 ## Problem Link
-https://takeuforward.org/plus/dsa/problems/find-the-repeating-and-missing-number?subject=dsa-concept-revision&approach=optimal&tab=submissions
+https://takeuforward.org/plus/dsa/problems/find-the-repeating-and-missing-number?subject=dsa-concept-revision&approach=better&tab=submissions
 
 ## Stats
 - Test Cases: 116/116
-- Time: 0.054s
-- Memory: 401.92 KiB
+- Time: 0.036s
+- Memory: 402.68 KiB
