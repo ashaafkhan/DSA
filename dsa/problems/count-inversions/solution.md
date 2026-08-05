@@ -70,19 +70,54 @@ Constraints
 
 ```cpp
 class Solution {
+
+private:
+    long long int merge(vector<int>&arr, int low,int mid,int high){
+        //optimal soln => Uses merge sort
+        vector<int> temp;
+        int left= low;
+        int right= mid+1;
+        long long int cnt=0;
+
+        while(left<=mid && right<=high){
+            if(arr[left]<=arr[right]){
+                temp.push_back(arr[left]);
+                left++;
+            }else{
+                temp.push_back(arr[right]);
+                cnt += (mid-left+1);
+                right++;
+            }
+        }
+        while(left<=mid){
+            temp.push_back(arr[left]);
+            left++;
+        }
+        while(right<=high){
+            temp.push_back(arr[right]);
+            right++;
+        }
+        for(int i=low;i<=high;i++){
+            arr[i] = temp[i-low];
+        }
+        return cnt;
+    }
+
+    long long int mergeSort(vector<int>&arr,int low,int high){
+        long long int cnt=0;
+        if(low<high){
+            int mid = low + (high-low) /2;
+            cnt += mergeSort(arr,low,mid);
+            cnt += mergeSort(arr,mid+1,high);
+            cnt += merge(arr,low,mid,high);
+        }
+        return cnt;
+    }
+
 public:
    long long int numberOfInversions(vector<int> nums) {
-    //brute force (doesn't work)
-
-    int n = nums.size();
-
-    int cnt=0;
-    for(int i=0;i<n;i++){
-        for(int j=i+1;j<n;j++){
-            if(nums[i]>nums[j]) cnt++;
-        }
-    }
-    return cnt;
+        int n = nums.size();
+        return mergeSort(nums,0,n-1);
     }
 };
 ```
@@ -92,5 +127,5 @@ https://takeuforward.org/plus/dsa/problems/count-inversions?subject=dsa-concept-
 
 ## Stats
 - Test Cases: 119/119
-- Time: 0.474s
-- Memory: 404.39 KiB
+- Time: 0.338s
+- Memory: 404.22 KiB
