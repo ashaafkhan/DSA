@@ -47,27 +47,21 @@ n == nums.length.
 class Solution {
 public:
     vector<int> majorityElementTwo(vector<int>& nums) {
-        //brute force => O(n^2)
+        //better soln => hashing
+
         int n = nums.size();
         vector<int>result;
+        unordered_map<int,int>mpp;
+        int mini = int(n/3) + 1;
 
         for(int i=0;i<n;i++){
-            if(result.size()== 0 || result[0] != nums[i]){
-                int cnt =0;
-                for(int j =0;j<n;j++){
-                    if(nums[j] == nums[i]){
-                        cnt++;
-                    }
-                }
-                if(cnt > n/3){
-                    result.push_back(nums[i]);
-                }
+            mpp[nums[i]]++;
+            if(mpp[nums[i]]==mini){
+                result.push_back(nums[i]);
             }
-            if(result.size() == 2) break;
-        }                    
+            if(result.size()==2) break;
+        }
         return result;
-
-        
     }
 };
 ```
@@ -77,5 +71,5 @@ https://takeuforward.org/plus/dsa/problems/majority-element-ii?subject=dsa-conce
 
 ## Stats
 - Test Cases: 118/118
-- Time: 0.052s
-- Memory: 424.26 KiB
+- Time: 0.053s
+- Memory: 424.46 KiB
