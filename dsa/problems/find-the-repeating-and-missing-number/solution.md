@@ -54,30 +54,39 @@ n - 2 elements in nums appear exactly once and are valued between [1, n].
 class Solution {
 public:
     vector<int> findMissingRepeatingNumbers(vector<int> nums) {
-        //better soln => hashing(O(2n))
-        int n = nums.size();
-        int hash[n+1] = {0};
+        //optimal1(maths) => O(n)
 
+        long long n = nums.size();
+        //S - Sn  = x(repeating) - y(missing)
+        //S2 - S2n
+
+        long long Sn = (n * (n+1))/2;
+        long long S2n = (n *(n+1) * (2*n+1))/6;
+
+        long long S=0, S2=0;
         for(int i=0;i<n;i++){
-            hash[nums[i]]++;
+            S += nums[i];
+            S2 += (long long)nums[i] * (long long)nums[i];
         }
 
-        int repeating = -1 , missing = -1;
+        long long val1 = S - Sn; //x-y
+        long long val2 = S2 - S2n;
+        val2 = val2 / val1; //x+y
 
-        for(int i=1;i<=n;i++){
-            if(hash[i]==2) repeating=i;
-            else if(hash[i]==0) missing=i;
-            if(repeating != -1 && missing != -1) break;
-        }
-        return {repeating, missing};
+        long long x = (val1 + val2)/2;
+
+        long long y = x - val1;
+
+        return {(int)x,(int)y};
+
     }
 };
 ```
 
 ## Problem Link
-https://takeuforward.org/plus/dsa/problems/find-the-repeating-and-missing-number?subject=dsa-concept-revision&approach=better&tab=submissions
+https://takeuforward.org/plus/dsa/problems/find-the-repeating-and-missing-number?subject=dsa-concept-revision&approach=optimal-i&tab=submissions
 
 ## Stats
 - Test Cases: 116/116
-- Time: 0.036s
-- Memory: 402.68 KiB
+- Time: 0.039s
+- Memory: 402.20 KiB
