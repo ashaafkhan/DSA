@@ -54,39 +54,64 @@ n - 2 elements in nums appear exactly once and are valued between [1, n].
 class Solution {
 public:
     vector<int> findMissingRepeatingNumbers(vector<int> nums) {
-        //optimal1(maths) => O(n)
-
+        // optimal2(xor logic) => O(n)
         long long n = nums.size();
-        //S - Sn  = x(repeating) - y(missing)
-        //S2 - S2n
+        int xr = 0;
 
-        long long Sn = (n * (n+1))/2;
-        long long S2n = (n *(n+1) * (2*n+1))/6;
-
-        long long S=0, S2=0;
         for(int i=0;i<n;i++){
-            S += nums[i];
-            S2 += (long long)nums[i] * (long long)nums[i];
+            xr = xr ^ nums[i];
+            xr = xr ^ (i+1);
         }
 
-        long long val1 = S - Sn; //x-y
-        long long val2 = S2 - S2n;
-        val2 = val2 / val1; //x+y
+        int bitNo = 0;
+    
+        while(1){
+            if((xr & (1<<bitNo)) != 0){
+                break;
+            }
+            bitNo++;
+        }
 
-        long long x = (val1 + val2)/2;
+        int zero = 0, one = 0;
 
-        long long y = x - val1;
+        for(int i=0;i<n;i++){
+            //part of one club
+            if((nums[i] & (1<<bitNo)) != 0){
+                one = one ^ nums[i];
+            }
+            //part of zero club
+            else{
+                zero = zero ^ nums[i];
+            }
+        }
 
-        return {(int)x,(int)y};
+        for(int i=1;i<=n;i++){
+            //part of one club
+            if((i & (1<<bitNo)) != 0){
+                one = one ^ i;
+            }
+            //part of zero club
+            else{
+                zero = zero ^ i;
+            }
+        }
 
+        int cnt =0;
+        for(int i=0;i<n;i++){
+            if(nums[i] == zero){
+                cnt++;
+            }
+        }
+        if(cnt == 2) return {zero,one};
+        return {one,zero};
     }
 };
 ```
 
 ## Problem Link
-https://takeuforward.org/plus/dsa/problems/find-the-repeating-and-missing-number?subject=dsa-concept-revision&approach=optimal-i&tab=submissions
+https://takeuforward.org/plus/dsa/problems/find-the-repeating-and-missing-number?subject=dsa-concept-revision&approach=optimal-ii&tab=submissions
 
 ## Stats
 - Test Cases: 116/116
-- Time: 0.039s
-- Memory: 402.20 KiB
+- Time: 0.038s
+- Memory: 402.29 KiB
