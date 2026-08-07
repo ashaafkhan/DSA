@@ -65,36 +65,51 @@ Both nums1 and nums2 are sorted in non-decreasing order.
 class Solution {
 public:
     void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
-        //optimal-01
+        //optimal 2 -> gap method
 
-        int left = m-1;
-        int right = 0;
-        while(left>=0 && right<n){
-            if(nums1[left]> nums2[right]){
-                swap(nums1[left],nums2[right]);
-                left--;
-                right++;
+        int len = n +m ;
+        int gap = (len / 2) + (len % 2);
+        while(gap>0){
+            int left = 0;
+            int right = left + gap;
+            while(right < len){
+                //left pointer in nums1[] and right pointer in nums2[]
+                if(left < m && right >=m){
+                    swapIfGreater(nums1,nums2,left,right-m);
+                }
+                //when both pointer in nums2[]
+                else if(left >= m){
+                    swapIfGreater(nums2,nums2,left-m,right-m);
+                }
+                //both pointer in nums1[]
+                else{
+                    swapIfGreater(nums1,nums1,left,right);
+                }
+                left++,right++;
             }
-            else{
-                break;
-            }
+            if(gap == 1) break;
+            gap = (gap/2) + (gap%2);
         }
-
-        sort(nums1.begin()+0,nums1.begin()+m);
-        sort(nums2.begin(),nums2.end());
 
         for(int i=m;i<m+n;i++){
             nums1[i] = nums2[i-m];
+        }     
+    }
+
+private:
+
+    void swapIfGreater(vector<int>& arr1,vector<int>&arr2,int idx1,int idx2){
+        if(arr1[idx1]> arr2[idx2]){
+            swap(arr1[idx1],arr2[idx2]);
         }
-        
     }
 };
 ```
 
 ## Problem Link
-https://takeuforward.org/plus/dsa/problems/merge-two-sorted-arrays-without-extra-space?subject=dsa-concept-revision&approach=optimal-i&tab=submissions
+https://takeuforward.org/plus/dsa/problems/merge-two-sorted-arrays-without-extra-space?subject=dsa-concept-revision&approach=optimal-ii&tab=submissions
 
 ## Stats
 - Test Cases: 117/117
-- Time: 0.012s
-- Memory: 407.51 KiB
+- Time: 0.008s
+- Memory: 401.58 KiB
