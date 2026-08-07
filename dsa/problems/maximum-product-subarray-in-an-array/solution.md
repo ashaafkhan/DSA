@@ -48,16 +48,14 @@ Constraints
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
-        //brute force (TLE)
+        //better solution => O(n^2)
         int n = nums.size();
         int result = INT_MIN;
 
         for(int i=0;i<n;i++){
+            int prod = 1;
             for(int j=i;j<n;j++){
-                int prod=1;
-                for(int k=i;k<=j;k++){
-                    prod *= nums[k];
-                }
+                prod = prod * nums[j];
                 result = max(result,prod);
             }
         }
@@ -71,5 +69,5 @@ https://takeuforward.org/plus/dsa/problems/maximum-product-subarray-in-an-array?
 
 ## Stats
 - Test Cases: 119/119
-- Time: 0.417s
-- Memory: 396.96 KiB
+- Time: 0.414s
+- Memory: 397.16 KiB
