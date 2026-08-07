@@ -48,26 +48,27 @@ Constraints
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
-        //better solution => O(n^2)
+        // optimal => O(n)
+        int pre = 1, suff = 1;
         int n = nums.size();
-        int result = INT_MIN;
-
+        int ans = INT_MIN;
         for(int i=0;i<n;i++){
-            int prod = 1;
-            for(int j=i;j<n;j++){
-                prod = prod * nums[j];
-                result = max(result,prod);
-            }
+            if(pre == 0) pre=1;
+            if(suff == 0) suff=1;
+
+            pre = pre * nums[i];
+            suff = suff * nums[n-i-1];
+            ans = max(ans,max(pre,suff));
         }
-        return result;
+        return ans;
     }
 };
 ```
 
 ## Problem Link
-https://takeuforward.org/plus/dsa/problems/maximum-product-subarray-in-an-array?subject=dsa-concept-revision&approach=better&tab=submissions
+https://takeuforward.org/plus/dsa/problems/maximum-product-subarray-in-an-array?subject=dsa-concept-revision&approach=optimal&tab=submissions
 
 ## Stats
 - Test Cases: 119/119
-- Time: 0.414s
-- Memory: 397.16 KiB
+- Time: 0.010s
+- Memory: 397.07 KiB
