@@ -65,39 +65,36 @@ Both nums1 and nums2 are sorted in non-decreasing order.
 class Solution {
 public:
     void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
-        //brute force 
-        vector<int>merged(n+m);
-        int left=0;
-        int right=0;
-        int index=0;
+        //optimal-01
 
-        while(left<m && right<n){
-            if(nums1[left] <= nums2[right]){
-                merged[index++] = nums1[left++];
-            }else{
-                merged[index++] = nums2[right++];
+        int left = m-1;
+        int right = 0;
+        while(left>=0 && right<n){
+            if(nums1[left]> nums2[right]){
+                swap(nums1[left],nums2[right]);
+                left--;
+                right++;
+            }
+            else{
+                break;
             }
         }
 
-        while(left<m){
-            merged[index++] = nums1[left++];
-        }
+        sort(nums1.begin()+0,nums1.begin()+m);
+        sort(nums2.begin(),nums2.end());
 
-        while(right<n){
-            merged[index++] = nums2[right++];
+        for(int i=m;i<m+n;i++){
+            nums1[i] = nums2[i-m];
         }
-
-        for(int i=0;i<m+n;i++){
-            nums1[i] = merged[i];
-        }
+        
     }
 };
 ```
 
 ## Problem Link
-https://takeuforward.org/plus/dsa/problems/merge-two-sorted-arrays-without-extra-space?subject=dsa-concept-revision&approach=brute&tab=submissions
+https://takeuforward.org/plus/dsa/problems/merge-two-sorted-arrays-without-extra-space?subject=dsa-concept-revision&approach=optimal-i&tab=submissions
 
 ## Stats
 - Test Cases: 117/117
-- Time: 0.009s
-- Memory: 401.08 KiB
+- Time: 0.012s
+- Memory: 407.51 KiB
