@@ -65,51 +65,28 @@ Both nums1 and nums2 are sorted in non-decreasing order.
 class Solution {
 public:
     void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
-        //optimal 2 -> gap method
-
-        int len = n +m ;
-        int gap = (len / 2) + (len % 2);
-        while(gap>0){
-            int left = 0;
-            int right = left + gap;
-            while(right < len){
-                //left pointer in nums1[] and right pointer in nums2[]
-                if(left < m && right >=m){
-                    swapIfGreater(nums1,nums2,left,right-m);
-                }
-                //when both pointer in nums2[]
-                else if(left >= m){
-                    swapIfGreater(nums2,nums2,left-m,right-m);
-                }
-                //both pointer in nums1[]
-                else{
-                    swapIfGreater(nums1,nums1,left,right);
-                }
-                left++,right++;
+        // optimal 3
+        int i = m-1,j=n-1;
+        int ind = m+n-1;
+        while(j>=0){
+            if(i>=0 && nums1[i]>=nums2[j]){
+                nums1[ind] = nums1[i];
+                ind--;
+                i--;
+            }else{
+                nums1[ind] = nums2[j];
+                ind--,j--;
             }
-            if(gap == 1) break;
-            gap = (gap/2) + (gap%2);
         }
-
-        for(int i=m;i<m+n;i++){
-            nums1[i] = nums2[i-m];
-        }     
-    }
-
-private:
-
-    void swapIfGreater(vector<int>& arr1,vector<int>&arr2,int idx1,int idx2){
-        if(arr1[idx1]> arr2[idx2]){
-            swap(arr1[idx1],arr2[idx2]);
-        }
+        return;
     }
 };
 ```
 
 ## Problem Link
-https://takeuforward.org/plus/dsa/problems/merge-two-sorted-arrays-without-extra-space?subject=dsa-concept-revision&approach=optimal-ii&tab=submissions
+https://takeuforward.org/plus/dsa/problems/merge-two-sorted-arrays-without-extra-space?subject=dsa-concept-revision&approach=optimal-iii&tab=submissions
 
 ## Stats
 - Test Cases: 117/117
-- Time: 0.008s
-- Memory: 401.58 KiB
+- Time: 0.009s
+- Memory: 400.82 KiB
