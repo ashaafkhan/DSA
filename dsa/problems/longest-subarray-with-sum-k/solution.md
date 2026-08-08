@@ -43,34 +43,38 @@ Constraints
 class Solution{
 public:
     int longestSubarray(vector<int> &nums, int k){
-        //optimal soln => only for positive
+
+        //better soln for positive & optimal soln for positive+negative => hashmap
 
         int n = nums.size();
+
+        map<int,int>preSumMap;
+        int sum=0;
         int maxLen = 0;
-        int left=0,right=0;
-        int sum = nums[0];
-        while(right<n){
-            while(left<=right && sum>k){
-                sum -= nums[left];
-                left++;
-            }
+        for(int i=0;i<n;i++){
+            sum += nums[i];
             if(sum == k){
-                maxLen = max(maxLen,right-left+1);
+                maxLen = max(maxLen,i+1);
             }
-            right++;
-            if(right<n) sum += nums[right];
+            int rem = sum - k;
+            if(preSumMap.find(rem) != preSumMap.end()){
+                int len = i - preSumMap[rem];
+                maxLen = max(maxLen,len);
+            }
+            if(preSumMap.find(sum) == preSumMap.end()){
+                preSumMap[sum] = i;
+            }
         }
         return maxLen;
     }
 };
 
-
 ```
 
 ## Problem Link
-https://takeuforward.org/plus/dsa/problems/longest-subarray-with-sum-k?subject=dsa-concept-revision&approach=optimal-positives-negatives&tab=submissions
+https://takeuforward.org/plus/dsa/problems/longest-subarray-with-sum-k?subject=dsa-concept-revision&approach=optimal-only-positives&tab=submissions
 
 ## Stats
 - Test Cases: 124/124
-- Time: 0.255s
-- Memory: 417.89 KiB
+- Time: 0.257s
+- Memory: 417.63 KiB
