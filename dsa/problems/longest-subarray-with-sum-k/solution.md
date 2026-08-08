@@ -43,23 +43,31 @@ Constraints
 class Solution{
 public:
     int longestSubarray(vector<int> &nums, int k){
-        //brute force
-        int n = nums.size();
-        int maxLength =0;
 
+        //better soln => hashmap
+
+        int n = nums.size();
+
+        map<int,int>preSumMap;
+        int sum=0;
+        int maxLen = 0;
         for(int i=0;i<n;i++){
-            int sum = 0;
-            for(int j=i;j<n;j++){
-                sum += nums[j];
-            if(sum == k) {
-                maxLength = max(maxLength,j-i+1);
+            sum += nums[i];
+            if(sum == k){
+                maxLen = max(maxLen,i+1);
             }
+            int rem = sum - k;
+            if(preSumMap.find(rem) != preSumMap.end()){
+                int len = i - preSumMap[rem];
+                maxLen = max(maxLen,len);
+            }
+            if(preSumMap.find(sum) == preSumMap.end()){
+                preSumMap[sum] = i;
             }
         }
-        return maxLength;
+        return maxLen;
     }
 };
-
 
 ```
 
@@ -68,5 +76,5 @@ https://takeuforward.org/plus/dsa/problems/longest-subarray-with-sum-k?subject=d
 
 ## Stats
 - Test Cases: 124/124
-- Time: 0.257s
-- Memory: 418.02 KiB
+- Time: 0.255s
+- Memory: 417.89 KiB
