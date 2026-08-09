@@ -51,18 +51,13 @@ Constraints
 class Solution{
 public:
     int subarraysWithXorK(vector<int> &nums, int k) {
-
-        //brute force => O(n^3)
-
+        //better solution => O(n^2)
         int n = nums.size();
         int cnt = 0;
-
         for(int i=0;i<n;i++){
+            int xorr = 0;
             for(int j=i;j<n;j++){
-                int xorr = 0;
-                for(int K=i;K<=j;K++){
-                    xorr = xorr ^ nums[K];
-                }
+                xorr = xorr ^ nums[j];
                 if(xorr == k) cnt++;
             }
         }
