@@ -36,21 +36,23 @@ Constraints
 ## Solution
 
 ```cpp
-class Solution{
+ class Solution{
 public:
     int subarraySum(vector<int> &nums, int k){
-
+        //brute force => O(n^3)
         int n = nums.size();
-        unordered_map<int,int> prefixSumMap;
-        int currentPrefixSum = 0, subarrayCount = 0;
-        prefixSumMap[0] = 1;
+        int cnt = 0;
+
         for(int i=0;i<n;i++){
-            currentPrefixSum += nums[i];
-            int sumToRemove = currentPrefixSum - k;
-            subarrayCount += prefixSumMap[sumToRemove];
-            prefixSumMap[currentPrefixSum] += 1;
+            for(int j=i;j<n;j++){
+                int sum = 0;
+                for(int l=i;l<=j;l++){
+                    sum += nums[l];
+                }
+                if(sum == k) cnt++;
+            }
         }
-        return subarrayCount;
+        return cnt;
     }
 };
 ```
