@@ -39,19 +39,18 @@ Constraints
 class Solution{
 public:
     int subarraySum(vector<int> &nums, int k){
-
-        //better Solution => O(n^2)
+        //optimal => prefix sum concept(hashing)
         int n = nums.size();
-        int cnt = 0;
-
+        unordered_map<int,int> prefixSumMap;
+        int currentPrefixSum = 0, subarrayCount = 0;
+        prefixSumMap[0] = 1;
         for(int i=0;i<n;i++){
-            int sum = 0;
-            for(int j=i;j<n;j++){
-                sum += nums[j];
-                if(sum == k) cnt++;
-            }   
+            currentPrefixSum += nums[i];
+            int sumToRemove = currentPrefixSum - k;
+            subarrayCount += prefixSumMap[sumToRemove];
+            prefixSumMap[currentPrefixSum] += 1;
         }
-        return cnt;
+        return subarrayCount;
     }
 };
 ```
@@ -61,5 +60,5 @@ https://takeuforward.org/plus/dsa/problems/count-subarrays-with-given-sum?subjec
 
 ## Stats
 - Test Cases: 121/121
-- Time: 0.257s
-- Memory: 419.66 KiB
+- Time: 0.337s
+- Memory: 419.78 KiB
