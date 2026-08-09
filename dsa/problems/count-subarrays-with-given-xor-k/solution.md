@@ -51,15 +51,17 @@ Constraints
 class Solution{
 public:
     int subarraysWithXorK(vector<int> &nums, int k) {
-        //better solution => O(n^2)
+        //optimal Solution => hashmap
         int n = nums.size();
+        int xr = 0;
+        map<int,int>mpp;
+        mpp[xr]++;
         int cnt = 0;
         for(int i=0;i<n;i++){
-            int xorr = 0;
-            for(int j=i;j<n;j++){
-                xorr = xorr ^ nums[j];
-                if(xorr == k) cnt++;
-            }
+            xr = xr ^ nums[i];
+            int x = xr ^ k;
+            cnt += mpp[x];
+            mpp[xr]++;
         }
         return cnt;
     }
@@ -71,5 +73,5 @@ https://takeuforward.org/plus/dsa/problems/count-subarrays-with-given-xor-k?subj
 
 ## Stats
 - Test Cases: 124/124
-- Time: 0.453s
-- Memory: 417.25 KiB
+- Time: 0.319s
+- Memory: 416.87 KiB
