@@ -53,22 +53,31 @@ Constraints
 class Solution{
 public:
     int upperBound(vector<int> &nums, int x){
-        //brute force
+
+        //optimal
         int n = nums.size();
-        for(int i=0;i<n;i++){
-            if(nums[i]>x){
-                return i;
+        int low=0,high=n-1;
+        int ans = n;
+
+        while(low<=high){
+            int mid = (low+high)/2;
+
+            if(nums[mid]>x){
+                ans = mid;
+                high = mid-1;
+            }else{
+                low = mid+1;
             }
         }
-        return n;
+        return ans;
     }
 };
 ```
 
 ## Problem Link
-https://takeuforward.org/plus/dsa/problems/upper-bound?subject=dsa-concept-revision&approach=brute&tab=submissions
+https://takeuforward.org/plus/dsa/problems/upper-bound?subject=dsa-concept-revision&approach=optimal&tab=submissions
 
 ## Stats
 - Test Cases: 113/113
-- Time: 0.053s
-- Memory: 397.06 KiB
+- Time: 0.036s
+- Memory: 396.98 KiB
