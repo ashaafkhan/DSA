@@ -53,24 +53,30 @@ Constraints
 class Solution{
 public:
     int lowerBound(vector<int> &nums, int x){
-
-        //brute force
-
+        //optimal
         int n = nums.size();
-        for(int i=0;i<n;i++){
-            if(nums[i]>=x){
-                return i;
+        int low=0,high = n-1;
+        int ans = n;
+
+        while(low<=high){
+            int mid = (low+high)/2;
+
+            if(nums[mid]>=x){
+                ans = mid;
+                high = mid-1;
+            }else{
+                low = mid+1;
             }
         }
-        return n;
+        return ans;
     }
 };
 ```
 
 ## Problem Link
-https://takeuforward.org/plus/dsa/problems/lower-bound-?subject=dsa-concept-revision&approach=brute&tab=submissions
+https://takeuforward.org/plus/dsa/problems/lower-bound-?subject=dsa-concept-revision&approach=optimal&tab=submissions
 
 ## Stats
 - Test Cases: 116/116
-- Time: 0.052s
-- Memory: 396.93 KiB
+- Time: 0.048s
+- Memory: 397.18 KiB
