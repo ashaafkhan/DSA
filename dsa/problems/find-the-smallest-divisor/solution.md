@@ -41,22 +41,32 @@ Constraints
 
 ```cpp
 class Solution {
+
+private:
+    int sumByD(vector<int>&nums,int limit){
+        int n = nums.size();
+        int sum = 0;
+        for(int i=0;i<n;i++){
+            sum += ceil((double)(nums[i])/(double)(limit));
+        }
+        return sum;
+    }
+
 public:
   int smallestDivisor(vector<int> &nums, int limit) {
-        //linear search(TLE)
-        int n = nums.size();
-        int maxi = *max_element(nums.begin(),nums.end());
-
-        for(int d=1;d<=maxi;d++){
-            int sum = 0;
-            for(int i=0;i<n;i++){
-                sum += ceil((double)nums[i]/(double)d);
-            }
-            if(sum <= limit){
-                return d;
+        //binary search
+       int n = nums.size();
+       if(n>limit) return -1;
+       int low=1,high=*max_element(nums.begin(),nums.end());
+        while(low<=high){
+            int mid = (low+high)/2;
+            if(sumByD(nums,mid)<=limit){
+                high = mid-1;
+            }else{
+                low=mid+1;
             }
         }
-        return -1;
+        return low;
     }
 };
 ```
@@ -66,5 +76,5 @@ https://takeuforward.org/plus/dsa/problems/find-the-smallest-divisor?subject=dsa
 
 ## Stats
 - Test Cases: 126/126
-- Time: 0.067s
-- Memory: 398.62 KiB
+- Time: 0.059s
+- Memory: 398.76 KiB
