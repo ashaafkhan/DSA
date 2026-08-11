@@ -41,22 +41,37 @@ n == nums.length
 class Solution {
 public:
     int findMin(vector<int> &arr)  {
-        //linear search
-
+        //binary search
         int n = arr.size();
-        int mini = INT_MAX;
-        for(int i=0;i<n;i++){
-            mini = min(mini,arr[i]);
+        int low = 0, high=n-1;
+        int ans = INT_MAX;
+
+        while(low<=high){
+            int mid = (high+low)/2;
+            if(arr[low]<=arr[high]){
+                ans = min(ans,arr[low]);
+                break;
+            }
+            //left sorted
+            if(arr[low]<=arr[mid]){
+                ans = min(ans,arr[low]);
+                low = mid+1;
+            }//right sorted
+            else{
+                ans = min(ans,arr[mid]);
+                high = mid-1;
+                
+            }
         }
-        return mini;
+        return ans;
     }
 };
 ```
 
 ## Problem Link
-https://takeuforward.org/plus/dsa/problems/find-minimum-in-rotated-sorted-array?subject=dsa-concept-revision&approach=optimal&tab=submissions
+https://takeuforward.org/plus/dsa/problems/find-minimum-in-rotated-sorted-array?subject=dsa-concept-revision&approach=binary-search&tab=submissions
 
 ## Stats
 - Test Cases: 104/104
-- Time: 0.010s
-- Memory: 397.19 KiB
+- Time: 0.011s
+- Memory: 397.54 KiB
