@@ -49,32 +49,32 @@ Constraints
 class Solution {
 
 private:
-    long long calculateTotalHours(vector<int>&v,int hourly){
-        long long totalH=0;
-        int n = v.size();
-        for(int i=0;i<n;i++){
-            totalH += ceil((double)(v[i])/(double)(hourly));
-        }
-        return totalH;
+long long calculateTotalHours(vector<int>&nums,int hourly){
+    long long totalH = 0;
+    int n = nums.size();
+    for(int i=0;i<n;i++){
+        totalH += ceil((double)(nums[i])/(double)(hourly));
     }
+    return totalH;
+}
 
 public:
 int minimumRateToEatBananas(vector<int> nums, int h) {
-     //linear search(TLE)
-     int n = nums.size();
+    //binary search
+    int low = 1, high = *max_element(nums.begin(),nums.end());
 
-     int maxi = *max_element(nums.begin(),nums.end());
-     for(int i=1;i<=maxi;i++){
-        long long reqTime = calculateTotalHours(nums,i);
-        if(reqTime<=(long long)h){
-            return i;
+    while(low<=high){
+        int mid = (low+high)/2;
+        long long totalH = calculateTotalHours(nums,mid);
+        if(totalH<=h){
+            high = mid-1;
+        }else{
+            low = mid+1;
         }
-     }
-        return maxi;
- 
+    }
+    return low;
     }
 };
-
 
 ```
 
@@ -83,5 +83,5 @@ https://takeuforward.org/plus/dsa/problems/koko-eating-bananas?subject=dsa-conce
 
 ## Stats
 - Test Cases: 121/121
-- Time: 0.014s
-- Memory: 401.58 KiB
+- Time: 0.013s
+- Memory: 402.01 KiB
