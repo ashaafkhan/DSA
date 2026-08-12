@@ -59,16 +59,21 @@ private:
 
 public:
     int aggressiveCows(vector<int> &nums, int k) {
-        //linear search(TLE)
+        //binary search soln
+
         int n = nums.size();
         sort(nums.begin(),nums.end());
-        int limit = nums[n-1]-nums[0];
-        for(int i=0;i<=limit;i++){
-            if(canWePlace(nums,i,k) == false){
-                return (i-1);
+
+        int low=1,high=nums[n-1]-nums[0];
+        while(low<=high){
+            int mid = (low+high)/2;
+            if(canWePlace(nums,mid,k) == true){
+                low = mid +1;
+            }else{
+                high = mid - 1;
             }
         }
-        return limit;
+        return high;
     }
 };
 ```
@@ -79,4 +84,4 @@ https://takeuforward.org/plus/dsa/problems/aggressive-cows?subject=dsa-concept-r
 ## Stats
 - Test Cases: 133/133
 - Time: 0.292s
-- Memory: 404.87 KiB
+- Memory: 404.88 KiB
