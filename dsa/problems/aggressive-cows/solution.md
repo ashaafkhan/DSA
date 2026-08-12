@@ -59,21 +59,16 @@ private:
 
 public:
     int aggressiveCows(vector<int> &nums, int k) {
-        //binary search
-
+        //linear search(TLE)
         int n = nums.size();
         sort(nums.begin(),nums.end());
-
-        int low=1,high=nums[n-1]-nums[0];
-        while(low<=high){
-            int mid = (low+high)/2;
-            if(canWePlace(nums,mid,k) == true){
-                low = mid +1;
-            }else{
-                high = mid - 1;
+        int limit = nums[n-1]-nums[0];
+        for(int i=0;i<=limit;i++){
+            if(canWePlace(nums,i,k) == false){
+                return (i-1);
             }
         }
-        return high;
+        return limit;
     }
 };
 ```
