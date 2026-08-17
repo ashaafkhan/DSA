@@ -40,27 +40,64 @@ N==matrix.size
 
 ```cpp
 class Solution{
-public:
-    int findMedian(vector<vector<int>>&matrix) {
-        //linear search
-        vector<int>flattened;
-        for(auto& row: matrix){
-            for(int val : row){
-                flattened.push_back(val);
+
+private:
+
+    int upperBound(vector<int>& arr,int x,int m){
+        int low=0,high=m-1;
+        int ans = m;
+        while(low<=high){
+            int mid = (low+high)/2;
+            if(arr[mid]>x){
+                ans = mid;
+                high = mid-1;
+            }else{
+                low = mid+1;
             }
         }
-        sort(flattened.begin(),flattened.end());
+        return ans;
+    }
 
-        int n = flattened.size();
-        return flattened[n/2];
+    int countSmallEqual(vector<vector<int>>& matrix,int n,int m,int x){
+        int cnt =0;
+        for(int i=0;i<n;i++){
+            cnt += upperBound(matrix[i],x,m);
+        }
+        return cnt;
+    }
+public:
+    int findMedian(vector<vector<int>>&matrix) {
+        //binary search
+        int n = matrix.size();
+        int m = matrix[0].size();
+
+        int low=INT_MAX, high =INT_MIN;
+
+        for(int i=0;i<n;i++){
+            low = min(low,matrix[i][0]);
+            high = max(high,matrix[i][m-1]);
+        }
+
+        int req = (n*m)/2;
+
+        while(low<=high){
+            int mid = low + (high-low)/2;
+
+            //count how many element are less than or equal to mid
+            int smallEqual = countSmallEqual(matrix,n,m,mid);
+
+            if(smallEqual<= req) low = mid+1;
+            else high = mid-1;
+        }
+        return low;
     }
 };
 ```
 
 ## Problem Link
-https://takeuforward.org/plus/dsa/problems/matrix-median?subject=dsa-concept-revision&approach=binary-search&tab=submissions
+https://takeuforward.org/plus/dsa/problems/matrix-median?subject=dsa-concept-revision&approach=optimal&tab=submissions
 
 ## Stats
 - Test Cases: 133/133
-- Time: 0.218s
-- Memory: 416.55 KiB
+- Time: 0.099s
+- Memory: 407.04 KiB
