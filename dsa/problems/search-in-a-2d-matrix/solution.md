@@ -38,23 +38,33 @@ n == mat.length
 
 ```cpp
 class Solution{
+
+private:
+    bool binarySearch(vector<int>& mat,int target){
+        //better solution
+        int n = mat.size();
+        int low=0,high=n-1;
+        while(low<=high){
+            int mid = (low+high)/2;
+            if(mat[mid]==target) return true;
+            else if (target>mat[mid]) low = mid+1;
+            else high = mid-1;
+        }
+        return false;
+    }
+
 public:
     bool searchMatrix(vector<vector<int>> &mat, int target){
-        //brute force
-        if(mat.empty() || mat[0].empty()){
-            return false;
-        }
         int n = mat.size();
         int m = mat[0].size();
 
         for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(mat[i][j]==target){
-                    return true;
-                }
+            if(mat[i][0]<=target && target<=mat[i][m-1]){
+                return binarySearch(mat[i],target);
             }
         }
         return false;
+        
     }
 };
 ```
@@ -64,5 +74,5 @@ https://takeuforward.org/plus/dsa/problems/search-in-a-2d-matrix?subject=dsa-con
 
 ## Stats
 - Test Cases: 124/124
-- Time: 1.630s
-- Memory: 407.52 KiB
+- Time: 1.561s
+- Memory: 406.75 KiB
