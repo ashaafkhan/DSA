@@ -40,6 +40,7 @@ n == mat.length
 class Solution{
 public:
     bool searchMatrix(vector<vector<int>> &mat, int target){
+        //brute force
         if(mat.empty() || mat[0].empty()){
             return false;
         }
@@ -59,9 +60,9 @@ public:
 ```
 
 ## Problem Link
-https://takeuforward.org/plus/dsa/problems/search-in-a-2d-matrix?subject=dsa-concept-revision&approach=binary-search&tab=submissions
+https://takeuforward.org/plus/dsa/problems/search-in-a-2d-matrix?subject=dsa-concept-revision&approach=better&tab=submissions
 
 ## Stats
 - Test Cases: 124/124
-- Time: 1.894s
-- Memory: 407.58 KiB
+- Time: 1.630s
+- Memory: 407.52 KiB
